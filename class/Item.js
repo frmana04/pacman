@@ -1,4 +1,6 @@
 import {createImage} from '../helpers/load-image.js'
+import {ctx} from '../index.js'
+import  constants  from '../helpers/constants.js'
 
 export class Item {
 
@@ -8,10 +10,23 @@ export class Item {
 
         this.position=position;
 
-        const image=createImage(urlImage)
+        this.image=createImage(urlImage)
         .then(( image=>{ this.image=image
-            console.log(this)}))
+            item.draw()
+        }))
         .catch( err =>{console.log(err)})
     }
+
+    draw() {
+        
+        ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_BLOCK,constants.SIZE_BLOCK);
+       
+    }
+
+  
+
 }
+
+
+let item =new Item('../images/mario.png',500,{x:40,y:60})
 

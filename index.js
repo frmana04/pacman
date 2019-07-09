@@ -1,3 +1,6 @@
-import {Item} from './class/Item.js'
+import { Item } from './class/Item.js';
+import  constants  from './helpers/constants.js'
 
-let item = new Item('./images/mario.png',12,2);
+const ctx = document.getElementById(constants.CANVAS_ID).getContext('2d');
+
+export { ctx };
