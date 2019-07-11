@@ -28,5 +28,5 @@ export class Item {
 }
 
 
-let item =new Item('../images/mario.png',500,{x:40,y:60})
+let item =new Item('../images/pacman.png',500,{x:40,y:60})
 
