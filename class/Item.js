@@ -22,11 +22,5 @@ export class Item {
         ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_BLOCK,constants.SIZE_BLOCK);
        
     }
-
-  
-
 }
-
-
-let item =new Item('../images/pacman.png',500,{x:40,y:60})
 
