@@ -26,8 +26,9 @@ export class Pacman extends Character {
 
     move(){
 
+
         this.position.x+=this.speed.x;
-        this.position.y+=this.speed.y;
+         this.position.y+=this.speed.y;
 
     }
 
