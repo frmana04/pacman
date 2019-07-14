@@ -1,5 +1,6 @@
 import { Pacman } from "./Pacman.js";
 import {ctx} from '../index.js';
+import  ct  from '../helpers/constants.js'
 
 
 export class Game {
@@ -7,33 +8,56 @@ export class Game {
     constructor(canvasSize){
 
         this.canvasSize = canvasSize;
-        this.pacman = new Pacman('../images/pacman.png',{x:0,y:500},{width:30,height:30},{x:0,y:0},5,100,3);
+        new Pacman('../images/pacman-right.png',{x:0,y:500},{width:ct.SIZE_IMAGE,height:ct.SIZE_IMAGE},{x:0,y:0},5,100,3).then((data)=>{
+            this.pacman = data;
+           this.init();
+        })
     }
 
     init(){
-
+        
         requestAnimationFrame(this.animate);         
 
     }
 
+    moveAll(){
 
-    animate=()=>{
         this.pacman.move();
-        ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
-        this.pacman.draw(); 
-        requestAnimationFrame(this.animate);         
+
+    }
+
+    listenKeydown(){
         document.onkeydown = (event)=> {
             console.log(event.keyCode)
             switch(event.keyCode){
-            case 38: this.pacman.speed.y=-2; this.pacman.speed.x=0; break;
-            case 40: this.pacman.speed.y= 2; this.pacman.speed.x=0; break;
-            case 37: this.pacman.speed.x=-2; this.pacman.speed.y=0; break;
-            case 39: this.pacman.speed.x= 2; this.pacman.speed.y=0; break;
+           
+                case ct.KEY_UP: this.pacman.keyUp(); break;
+                case ct.KEY_DOWN: this.pacman.keyDown(); break;
+                case ct.KEY_LEFT: this.pacman.keyLeft(); break;
+                case ct.KEY_RIGHT: this.pacman.keyRight();
             }
 
-
-
         }
+    }
+
+    drawAll(){
+
+        this.pacman.draw();
+    }
+
+    key_up(){
+
+
+    }
+
+    animate=()=>{
+        this.listenKeydown();
+        ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
+        this.moveAll();
+        this.drawAll(); 
+       
+        requestAnimationFrame(this.animate);         
+       
     }
 
    

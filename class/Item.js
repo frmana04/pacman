@@ -19,8 +19,8 @@ export class Item {
 
     draw() {
         
-        ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_BLOCK,constants.SIZE_BLOCK);
-       
+      //  ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_BLOCK,constants.SIZE_BLOCK,);
+
     }
 }
 

@@ -10,7 +10,6 @@ const width = window.outerWidth*0.7;
 const ctx = document.getElementById(constants.CANVAS_ID).getContext('2d');
 
 const game = new Game({width,height});
-game.init();
 
 // ctx.beginPath();
 // ctx.strokeStyle = 'blue';
