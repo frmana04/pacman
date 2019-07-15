@@ -1,6 +1,7 @@
+
 import {Element} from './Element.js'
 import  ct  from '../helpers/constants.js'
-import {ctx} from '../index.js';
+import {ctx} from '../index.js'
 
 export class Character extends Element{
 

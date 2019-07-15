@@ -1,5 +1,4 @@
 import {createImage} from '../helpers/load-image.js'
-import {ctx} from '../index.js'
 import  constants  from '../helpers/constants.js'
 
 export class Item {

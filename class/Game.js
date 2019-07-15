@@ -1,6 +1,10 @@
+
 import { Pacman } from "./Pacman.js";
+import { Map } from "./Map.js";
+import {Wall} from "./Wall.js";
+import  ct  from '../helpers/constants.js';
+import { Coordenate } from './Coordenate.js';
 import {ctx} from '../index.js';
-import  ct  from '../helpers/constants.js'
 
 
 export class Game {
@@ -12,6 +16,8 @@ export class Game {
             this.pacman = data;
            this.init();
         })
+        this.map = new Map();
+        this.wall = new Wall([{x:100,y:100},{x:150,y:100},{x:150,y:200},{x:400,y:200},],'red',5)
     }
 
     init(){
@@ -43,19 +49,25 @@ export class Game {
     drawAll(){
 
         this.pacman.draw();
+        this.map.draw();
+        this.wall.draw();
     }
 
-    key_up(){
+   createMap(){
+
+    
+
+}
 
 
-    }
+
 
     animate=()=>{
         this.listenKeydown();
         ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
         this.moveAll();
         this.drawAll(); 
-       
+        this.createMap();
         requestAnimationFrame(this.animate);         
        
     }
