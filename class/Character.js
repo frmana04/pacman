@@ -41,7 +41,7 @@ export class Character extends Element{
         else
         ctx.drawImage(this.image, ct.SIZE_BLOCK*(this.position.y%(ct.SPEED_SPRITES*2) >= ct.SPEED_SPRITES), 0, ct.SIZE_BLOCK, ct.SIZE_BLOCK, this.position.x, this.position.y, ct.SIZE_IMAGE, ct.SIZE_IMAGE);
 
-
+        
 
     }
 

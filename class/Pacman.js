@@ -37,7 +37,7 @@ export class Pacman extends Character {
     move(){
 
 
-        this.position.x+=this.speed.x;
+         this.position.x+=this.speed.x;
          this.position.y+=this.speed.y;
 
     }
@@ -68,6 +68,10 @@ export class Pacman extends Character {
         this.image.src='../images/pacman-right.png'
         this.speed.x= this.maxSpeed; 
         this.speed.y=0;
+    }
+
+    drawLimit(){
+        
     }
 
 }

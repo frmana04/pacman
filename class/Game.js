@@ -15,9 +15,9 @@ export class Game {
         new Pacman('../images/pacman-right.png',{x:0,y:500},{width:ct.SIZE_IMAGE,height:ct.SIZE_IMAGE},{x:0,y:0},5,100,3).then((data)=>{
             this.pacman = data;
            this.init();
+           this.map = new Map(this.pacman);
         })
-        this.map = new Map();
-        this.wall = new Wall([{x:100,y:100},{x:150,y:100},{x:150,y:200},{x:400,y:200},],'red',5)
+       
     }
 
     init(){
@@ -28,8 +28,10 @@ export class Game {
 
     moveAll(){
 
-        this.pacman.move();
-
+        this.map.pacmanCanMove(this.pacman)
+        
+            this.pacman.move();
+       
     }
 
     listenKeydown(){
@@ -46,18 +48,8 @@ export class Game {
         }
     }
 
-    drawAll(){
+  
 
-        this.pacman.draw();
-        this.map.draw();
-        this.wall.draw();
-    }
-
-   createMap(){
-
-    
-
-}
 
 
 
@@ -66,8 +58,7 @@ export class Game {
         this.listenKeydown();
         ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
         this.moveAll();
-        this.drawAll(); 
-        this.createMap();
+        this.map.draw(); 
         requestAnimationFrame(this.animate);         
        
     }
