@@ -15,7 +15,7 @@ export class Game {
         new Pacman('../images/pacman-right.png',{x:0,y:500},{width:ct.SIZE_IMAGE,height:ct.SIZE_IMAGE},{x:0,y:0},5,100,3).then((data)=>{
             this.pacman = data;
            this.init();
-           this.map = new Map(this.pacman);
+           this.map = new Map(this.pacman,this.canvasSize);
         })
        
     }
@@ -29,6 +29,7 @@ export class Game {
     moveAll(){
 
         this.map.pacmanCanMove(this.pacman)
+        this.map.ispacmanLimit()
         
             this.pacman.move();
        

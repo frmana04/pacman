@@ -3,15 +3,18 @@ import {Coordenate} from './Coordenate.js';
 import {ctx} from '../index.js'
 import  ct  from '../helpers/constants.js';
 import {Wall} from './Wall.js';
+import {Pacman} from './Pacman.js';
+
 export class Map{
 
-    constructor(pacman){
+    constructor(pacman,sizeMap){
 
         this.walls = [];
         this.enemies = [];
         this.items = [];
         this.createWalls();
         this.pacman=pacman
+        this.sizeMap = sizeMap;
 
     }
 
@@ -51,31 +54,31 @@ export class Map{
 
     }
 
-    pacmanCanMove(pacman){
+    pacmanCanMove(){
 
         this.walls.forEach(wall=>{
 
           
 
 
-        if (pacman.speed.x>0){
-            if (pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x && pacman.position.y<wall.coords[2].y&&pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y && pacman.position.x<wall.coords[2].x){ pacman.speed.x=0; pacman.position.x=wall.coords[0].x-ct.SIZE_IMAGE;}
+        if (this.pacman.speed.x>0){
+            if (this.pacman.position.x+ct.SIZE_IMAGE>=wall.coords[0].x && this.pacman.position.y<wall.coords[2].y&&this.pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y && this.pacman.position.x<wall.coords[2].x){ this.pacman.speed.x=0; this.pacman.position.x=wall.coords[0].x-ct.SIZE_IMAGE;}
         
         }
 
-        if (pacman.speed.x<0){
-            if (pacman.position.x<wall.coords[2].x && pacman.position.y<wall.coords[2].y&&pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y &&pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x ){ pacman.speed.x=0; pacman.position.x=wall.coords[2].x}
+        if (this.pacman.speed.x<0){
+            if (this.pacman.position.x<=wall.coords[2].x && this.pacman.position.y<wall.coords[2].y&&this.pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y &&this.pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x ){ this.pacman.speed.x=0; this.pacman.position.x=wall.coords[2].x}
         }
 
 
-        if (pacman.speed.y>0){
-            if (pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y && pacman.position.x<wall.coords[2].x&&pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x && pacman.position.y<wall.coords[2].y){ pacman.speed.y=0; pacman.position.y=wall.coords[0].y-ct.SIZE_IMAGE;}
+        if (this.pacman.speed.y>0){
+            if (this.pacman.position.y+ct.SIZE_IMAGE>=wall.coords[0].y && this.pacman.position.x<wall.coords[2].x&&this.pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x && this.pacman.position.y<wall.coords[2].y){ this.pacman.speed.y=0; this.pacman.position.y=wall.coords[0].y-ct.SIZE_IMAGE;}
         
         }
 
 
-        if (pacman.speed.y<0){
-            if (pacman.position.y<wall.coords[2].y && pacman.position.x<wall.coords[2].x&&pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x &&pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y ){ pacman.speed.y=0; pacman.position.y=wall.coords[2].y}
+        if (this.pacman.speed.y<0){
+            if (this.pacman.position.y<=wall.coords[2].y && this.pacman.position.x<wall.coords[2].x&&this.pacman.position.x+ct.SIZE_IMAGE>wall.coords[0].x &&this.pacman.position.y+ct.SIZE_IMAGE>wall.coords[0].y ){ this.pacman.speed.y=0; this.pacman.position.y=wall.coords[2].y}
         }
 
 
@@ -85,6 +88,21 @@ export class Map{
    
     }
 
+    ispacmanLimit(){
+
+        if (this.pacman.position.x> this.sizeMap.width)
+
+            this.pacman.position.x=-ct.SIZE_IMAGE;
+        
+        else if(this.pacman.position.x<-ct.SIZE_IMAGE)
+        this.pacman.position.x=this.sizeMap.width;
+
+        else if (this.pacman.position.y> this.sizeMap.height)
+        this.pacman.position.y=-ct.SIZE_IMAGE;
+
+        else if (this.pacman.position.y< -ct.SIZE_IMAGE)
+        this.pacman.position.y=this.sizeMap.height;
+    }
 
 
     }
