@@ -1,5 +1,4 @@
 import {createImage} from '../helpers/load-image.js'
-import  constants  from '../helpers/constants.js'
 
 export class Item {
 
@@ -18,7 +17,7 @@ export class Item {
 
     draw() {
         
-      //  ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_BLOCK,constants.SIZE_BLOCK,);
+      //  ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_IMAGE,constants.SIZE_IMAGE,);
 
     }
 }

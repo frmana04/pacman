@@ -1,47 +1,26 @@
 
 import {ctx} from '../index.js'
+import  {ct}  from '../helpers/constants.js';
 
 export class Wall {
 
-    constructor(coords,color,lineWidth){
+    constructor(position,size,color){
 
-        
-        this.coords =coords
+        this.position = position;
+        this.size = size;
+       
         this.color=color
        
-        this.lineWidth=lineWidth;
     }
 
     draw(){
 
-
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.lineWidth;
-
-        ctx.beginPath();
-      
-        ctx.moveTo(this.coords[0].x,this.coords[0].y);
-
-        this.coords.forEach( coord =>{
-            ctx.lineTo(coord.x,coord.y)
-        })
-
-        ctx.closePath();
-        ctx.stroke();
-    }
-
-    isInnerCoord(point){
-
-      
-
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
 
 
     }
 
-   
-    
-
- 
 
 
 

@@ -1,15 +1,29 @@
 
-import  constants  from './helpers/constants.js'
-import {extendCanvas} from './helpers/extend-canvas.js'
+import  {ct}  from './helpers/constants.js'
 import { Game } from './class/Game.js';
 
-const height = window.outerHeight*0.7;
-const width = window.outerWidth*0.7;
- document.querySelector(`#${constants.CANVAS_ID}`).setAttribute('height',height); 
- document.querySelector(`#${constants.CANVAS_ID}`).setAttribute('width',width) ;
-const ctx = document.getElementById(constants.CANVAS_ID).getContext('2d');
 
-extendCanvas(ctx);
+if (window.outerHeight<window.outerWidth){
+
+
+var height = Math.trunc(window.outerHeight*0.8/21)*21;
+ct.UNIT_MAP =  height/21;
+var width = ct.UNIT_MAP*19+4*ct.UNIT_MAP;
+}
+
+else {
+    var width = Math.trunc(window.outerWidth*0.8/19)*19;
+    ct.UNIT_MAP =  width/19;
+    var height = Math.trunc(window.outerHeight*0.8/21)*21;
+    width+=4*ct.UNIT_MAP
+
+}
+
+
+ document.querySelector(`#${ct.CANVAS_ID}`).setAttribute('height',height); 
+ document.querySelector(`#${ct.CANVAS_ID}`).setAttribute('width',width) ;
+const ctx = document.getElementById(ct.CANVAS_ID).getContext('2d');
+
 console.log(ctx)
 
 

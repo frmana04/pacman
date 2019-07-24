@@ -1,6 +1,6 @@
 import {createImage} from '../helpers/load-image.js';
 import {ctx} from '../index.js';
-import  ct  from '../helpers/constants.js'
+import  {ct}  from '../helpers/constants.js'
 
 export class Element {
 
@@ -17,8 +17,7 @@ export class Element {
     }
 
     draw() {
-
-        // ctx.drawImage(this.image, 30*(this.position.x%(ct.SPEED_SPRITES*2) >= ct.SPEED_SPRITES), 0, ct.SIZE_BLOCK, ct.SIZE_BLOCK, this.position.x, this.position.y, ct.SIZE_BLOCK, ct.SIZE_BLOCK);
+        // ctx.drawImage(this.image, 30*(this.position.x%(ct.SPEED_SPRITES*2) >= ct.SPEED_SPRITES), 0, ct.SIZE_IMAGE, ct.SIZE_IMAGE, this.position.x, this.position.y, ct.SIZE_IMAGE, ct.SIZE_IMAGE);
     }
 
 }

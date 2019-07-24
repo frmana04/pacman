@@ -2,7 +2,7 @@
 import { Pacman } from "./Pacman.js";
 import { Map } from "./Map.js";
 import {Wall} from "./Wall.js";
-import  ct  from '../helpers/constants.js';
+import  {ct,map}  from '../helpers/constants.js';
 import { Coordenate } from './Coordenate.js';
 import {ctx} from '../index.js';
 
@@ -12,10 +12,11 @@ export class Game {
     constructor(canvasSize){
 
         this.canvasSize = canvasSize;
-        new Pacman('../images/pacman-right.png',{x:0,y:500},{width:ct.SIZE_IMAGE,height:ct.SIZE_IMAGE},{x:0,y:0},5,100,3).then((data)=>{
+        new Pacman('../images/pacman-right.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:0,y:0},5,100,3).then((data)=>{
             this.pacman = data;
-           this.init();
-           this.map = new Map(this.pacman,this.canvasSize);
+            this.map = new Map(this.pacman,map,{width:this.canvasSize.width-ct.UNIT_MAP*4,height:this.canvasSize.height});
+
+            this.init();
         })
        
     }
@@ -28,9 +29,7 @@ export class Game {
 
     moveAll(){
 
-        this.map.pacmanCanMove(this.pacman)
-        this.map.ispacmanLimit()
-        
+            this.map.ispacmanLimit()
             this.pacman.move();
        
     }
@@ -40,7 +39,7 @@ export class Game {
             console.log(event.keyCode)
             switch(event.keyCode){
            
-                case ct.KEY_UP: this.pacman.keyUp(); break;
+                case ct.KEY_UP:   this.pacman.keyUp(); break;
                 case ct.KEY_DOWN: this.pacman.keyDown(); break;
                 case ct.KEY_LEFT: this.pacman.keyLeft(); break;
                 case ct.KEY_RIGHT: this.pacman.keyRight();
