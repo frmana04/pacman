@@ -30,6 +30,7 @@ export class Game {
     moveAll(){
 
             this.map.ispacmanLimit()
+            this.map.pacmanCanMove()
             this.pacman.move();
        
     }

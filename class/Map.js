@@ -80,33 +80,62 @@ export class Map{
 
     pacmanCanMove(){
 
-        this.walls.forEach(wall=>{
+      
 
-          
-
-
+      
         if (this.pacman.speed.x>0){
-            if (this.pacman.position.x+ct.UNIT_MAP>=wall.coords[0].x && this.pacman.position.y<wall.coords[2].y&&this.pacman.position.y+ct.UNIT_MAP>wall.coords[0].y && this.pacman.position.x<wall.coords[2].x){ this.pacman.speed.x=0; this.pacman.position.x=wall.coords[0].x-ct.UNIT_MAP;}
-        
+
+            const posx = Math.trunc( (this.pacman.position.x+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
+            const posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
+    
+
+            if ((this.pacman.position.x+ct.UNIT_MAP-1)%ct.UNIT_MAP>=48 && this.map[posx+1][posy] instanceof Wall){
+            this.pacman.position.x=(posx)*ct.UNIT_MAP;
+            this.pacman.speed.x=0;
+            }
         }
 
         if (this.pacman.speed.x<0){
-            if (this.pacman.position.x<=wall.coords[2].x && this.pacman.position.y<wall.coords[2].y&&this.pacman.position.y+ct.UNIT_MAP>wall.coords[0].y &&this.pacman.position.x+ct.UNIT_MAP>wall.coords[0].x ){ this.pacman.speed.x=0; this.pacman.position.x=wall.coords[2].x}
-        }
 
+            const posx = Math.trunc( (this.pacman.position.x-1)/ct.UNIT_MAP)  
+            const posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
+    
+
+            if ((this.pacman.position.x-1)%ct.UNIT_MAP<=5 && this.map[posx-1][posy] instanceof Wall){
+            this.pacman.position.x=(posx)*ct.UNIT_MAP;
+            this.pacman.speed.x=0;
+            }
+        }
 
         if (this.pacman.speed.y>0){
-            if (this.pacman.position.y+ct.UNIT_MAP>=wall.coords[0].y && this.pacman.position.x<wall.coords[2].x&&this.pacman.position.x+ct.UNIT_MAP>wall.coords[0].x && this.pacman.position.y<wall.coords[2].y){ this.pacman.speed.y=0; this.pacman.position.y=wall.coords[0].y-ct.UNIT_MAP;}
-        
-        }
 
+            const posy = Math.trunc( (this.pacman.position.y+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
+            const posx = Math.trunc(this.pacman.position.x/ct.UNIT_MAP)
+    
+
+            if ((this.pacman.position.y+ct.UNIT_MAP-1)%ct.UNIT_MAP>=48 && this.map[posx][posy+1] instanceof Wall){
+            this.pacman.position.y=(posy)*ct.UNIT_MAP;
+            this.pacman.speed.y=0;
+            }
+        }
 
         if (this.pacman.speed.y<0){
-            if (this.pacman.position.y<=wall.coords[2].y && this.pacman.position.x<wall.coords[2].x&&this.pacman.position.x+ct.UNIT_MAP>wall.coords[0].x &&this.pacman.position.y+ct.UNIT_MAP>wall.coords[0].y ){ this.pacman.speed.y=0; this.pacman.position.y=wall.coords[2].y}
+
+            const posy = Math.trunc( (this.pacman.position.y-1)/ct.UNIT_MAP)  
+            const posx = Math.trunc(this.pacman.position.x/ct.UNIT_MAP)
+    
+
+            if ((this.pacman.position.y-1)%ct.UNIT_MAP<=5 && this.map[posx][posy-1] instanceof Wall){
+            this.pacman.position.y=(posy)*ct.UNIT_MAP;
+            this.pacman.speed.y=0;
+            }
         }
 
+      
+        
+        
 
-    })
+  
         
       
    
