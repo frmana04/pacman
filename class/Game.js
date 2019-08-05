@@ -12,12 +12,18 @@ export class Game {
     constructor(canvasSize){
 
         this.canvasSize = canvasSize;
-        new Pacman('../images/pacman-right.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:0,y:0},5,100,3).then((data)=>{
-            this.pacman = data;
-            this.map = new Map(this.pacman,map,{width:this.canvasSize.width-ct.UNIT_MAP*4,height:this.canvasSize.height});
+      
+            this.map = new Map({width:this.canvasSize.width-ct.UNIT_MAP*4,height:this.canvasSize.height})
+            
+            this.map.createMap().then(()=>{
 
-            this.init();
-        })
+                this.init();
+            }) 
+      
+
+          
+
+       
        
     }
 
@@ -31,19 +37,75 @@ export class Game {
 
             this.map.ispacmanLimit()
             this.map.pacmanCanMove()
-            this.pacman.move();
+            this.map.pacman.move();
        
     }
 
     listenKeydown(){
         document.onkeydown = (event)=> {
-            console.log(event.keyCode)
+
+            let posx, posy;
+            if (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
+             posx = Math.trunc(this.map.pacman.position.x/ct.UNIT_MAP)  
+            else             if (this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
+             posx = Math.trunc(this.map.pacman.position.x/ct.UNIT_MAP)  +1
+
+
+            if (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
+             posy = Math.trunc(this.map.pacman.position.y/ct.UNIT_MAP)  
+            else             if (this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
+             posy = Math.trunc(this.map.pacman.position.y/ct.UNIT_MAP)  +1   
+
+          
             switch(event.keyCode){
            
-                case ct.KEY_UP:   this.pacman.keyUp(); break;
-                case ct.KEY_DOWN: this.pacman.keyDown(); break;
-                case ct.KEY_LEFT: this.pacman.keyLeft(); break;
-                case ct.KEY_RIGHT: this.pacman.keyRight();
+
+
+
+
+                case ct.KEY_UP:   
+                
+                if(((this.map.pacman.speed.x!=0 || (this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy-1] instanceof Wall) )||(  this.map.pacman.speed.y>0 )){
+                
+                if (this.map.pacman.speed.x!=0)
+                this.map.pacman.position.x=posx*ct.UNIT_MAP;
+                
+                this.map.pacman.keyUp(); 
+                }
+
+                break;
+                case ct.KEY_DOWN: 
+
+                if(((this.map.pacman.speed.x!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy+1] instanceof Wall) )||(this.map.pacman.speed.y<0)){
+                
+                if (this.map.pacman.speed.x!=0)
+
+                this.map.pacman.position.x=posx*ct.UNIT_MAP;
+                this.map.pacman.keyDown(); 
+                }
+                break;
+                case ct.KEY_LEFT:
+
+                 if(((this.map.pacman.speed.y!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx-1][posy] instanceof Wall ))||(this.map.pacman.speed.x>0)){
+                    
+                 if (this.map.pacman.speed.y!=0)
+
+                 this.map.pacman.position.y=posy*ct.UNIT_MAP;
+                 this.map.pacman.keyLeft(); 
+                 }
+                 break;
+                case ct.KEY_RIGHT: 
+
+                if(((this.map.pacman.speed.y!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx+1][posy] instanceof Wall) )||(this.map.pacman.speed.x<0)){
+
+                if (this.map.pacman.speed.y!=0)
+
+                this.map.pacman.position.y=posy*ct.UNIT_MAP;
+                this.map.pacman.keyRight(); 
+                }
+              
+
+
             }
 
         }

@@ -1,23 +1,27 @@
 import {createImage} from '../helpers/load-image.js'
+import {Element} from './Element.js'
+import {ctx} from '../index.js'
+import  {ct}  from '../helpers/constants.js'
 
-export class Item {
+export class Item extends Element{
 
-    constructor(urlImage,points,position){
 
-        this.points=points;
+    constructor(urlImage,position,size,points){
 
-        this.position=position;
 
-        this.image=createImage(urlImage)
-        .then(( image=>{ this.image=image
-            item.draw()
-        }))
-        .catch( err =>{console.log(err)})
+        return (async ()=> {
+
+            super(urlImage,position,size);
+            this.points=points;
+
+            this.image = await createImage(urlImage)
+            return this;
+        }) ()       
     }
 
     draw() {
         
-      //  ctx.drawImage(this.image,this.position.x,this.position.y,constants.SIZE_IMAGE,constants.SIZE_IMAGE,);
+        ctx.drawImage(this.image,this.position.x,this.position.y,ct.UNIT_MAP,ct.UNIT_MAP,);
 
     }
 }
