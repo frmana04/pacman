@@ -51,7 +51,7 @@ export class Map{
 
       
 
-        new Pacman('../images/pacman-right.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,100,3).then(
+        new Pacman('../images/pacman-right.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,0,3).then(
             data=>{
                 this.pacman=data;
             }
@@ -171,9 +171,17 @@ export class Map{
         var posx = Math.trunc( (this.pacman.position.x)/ct.UNIT_MAP)  
         var posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
         }
+        if (posx-1>=0 && posx+1<this.map.length && posy-1>=0 && posy+1<this.map[0].length )
+
         if (this.map[posx][posy] instanceof Item){
         
+
+            this.pacman.points+= this.map[posx][posy].points;
+            if (this.map[posx][posy].points==500) this.pacman.toggleOnFire();
             this.map[posx][posy]={}
+
+
+
         }
    
     }

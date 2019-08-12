@@ -39,6 +39,7 @@ export class Game {
             this.map.pacmanCanMove()
             this.map.pacman.move();
        
+
     }
 
     listenKeydown(){
@@ -113,7 +114,14 @@ export class Game {
 
   
 
+drawInfo(){
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "white";
 
+    ctx.fillText("Points:", this.canvasSize.width-ct.UNIT_MAP*3.5, 50);
+    ctx.fillText(this.map.pacman.points, this.canvasSize.width-ct.UNIT_MAP*2, 50);
+
+}
 
 
 
@@ -122,6 +130,7 @@ export class Game {
         ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
         this.moveAll();
         this.map.draw(); 
+        this.drawInfo();
         requestAnimationFrame(this.animate);         
        
     }

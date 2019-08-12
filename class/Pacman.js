@@ -15,6 +15,7 @@ export class Pacman extends Character {
             this.points=points;
             this.lifes=lifes;
             this.image = await createImage(urlImage)
+            this.onFire=false;
             return this;
         }) ()       
     }
@@ -44,6 +45,10 @@ export class Pacman extends Character {
 
     keyUp(){
 
+        if (this.onFire)
+        this.image.src='../images/pacman-up-fire.png'
+
+        else
        this.image.src='../images/pacman-up.png'
        this.speed.y=-this.maxSpeed; 
        this.speed.x=0;
@@ -51,27 +56,42 @@ export class Pacman extends Character {
     }
 
     keyDown(){
+        if (this.onFire)
+        this.image.src='../images/pacman-down-fire.png'
+
+        else
         this.image.src='../images/pacman-down.png'
+
         this.speed.y= this.maxSpeed; 
         this.speed.x=0;
     }
 
     keyLeft(){
 
+        if (this.onFire)
+       this.image.src='../images/pacman-left-fire.png'
+       else
        this.image.src='../images/pacman-left.png'
+
        this.speed.x=-this.maxSpeed; 
        this.speed.y=0;
     }
 
     keyRight(){
 
+        if (this.onFire)
+        this.image.src='../images/pacman-right-fire.png'
+        else
         this.image.src='../images/pacman-right.png'
+
         this.speed.x= this.maxSpeed; 
         this.speed.y=0;
     }
 
-    drawLimit(){
-        
-    }
+   toggleOnFire(){
+
+    this.onFire=!this.onFire;
+
+   }
 
 }
