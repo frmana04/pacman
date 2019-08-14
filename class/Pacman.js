@@ -1,5 +1,6 @@
 import  {Character}  from "./Character.js";
 import {createImage} from '../helpers/load-image.js';
+import  {ct}  from '../helpers/constants.js';
 
 
 
@@ -14,8 +15,7 @@ export class Pacman extends Character {
             super(urlImage,position,size,speed,maxSpeed);
             this.points=points;
             this.lifes=lifes;
-            this.image = await createImage(urlImage)
-            this.onFire=false;
+            this.image = await createImage(urlImage);
             return this;
         }) ()       
     }
@@ -25,10 +25,7 @@ export class Pacman extends Character {
         this.lifes--;
     }
     
-    isGameOver(){
-
-        return this.lifes===0;
-    }
+  
 
     addPoints(points){
 
@@ -45,6 +42,7 @@ export class Pacman extends Character {
 
     keyUp(){
 
+        this.direction="UP";
         if (this.onFire)
         this.image.src='../images/pacman-up-fire.png'
 
@@ -56,6 +54,7 @@ export class Pacman extends Character {
     }
 
     keyDown(){
+        this.direction="DOWN";
         if (this.onFire)
         this.image.src='../images/pacman-down-fire.png'
 
@@ -68,6 +67,7 @@ export class Pacman extends Character {
 
     keyLeft(){
 
+        this.direction="LEFT";
         if (this.onFire)
        this.image.src='../images/pacman-left-fire.png'
        else
@@ -79,6 +79,7 @@ export class Pacman extends Character {
 
     keyRight(){
 
+        this.direction="RIGHT";
         if (this.onFire)
         this.image.src='../images/pacman-right-fire.png'
         else
@@ -88,10 +89,37 @@ export class Pacman extends Character {
         this.speed.y=0;
     }
 
-   toggleOnFire(){
+   setOnFire(){
 
-    this.onFire=!this.onFire;
+    this.onFire++;
+
+    this._setImageDirection()
+        setTimeout(()=>{
+
+            this.onFire--;
+            this._setImageDirection()
+
+
+        },ct.TIME_ONFIRE)
+    
+      
 
    }
+
+   _setImageDirection(){
+
+    let dir = ""
+    if (this.onFire) dir="-fire";
+    switch (this.direction){
+
+        case "UP": this.image.src=`../images/pacman-up${dir}.png`;break;
+        case "DOWN": this.image.src=`../images/pacman-down${dir}.png`;break;
+        case "LEFT": this.image.src=`../images/pacman-left${dir}.png`;break;
+        case "RIGHT": this.image.src=`../images/pacman-right${dir}.png`;break;
+
+
+    }
+
+}
 
 }

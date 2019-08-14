@@ -6,14 +6,14 @@ import  {ct}  from '../helpers/constants.js'
 export class Item extends Element{
 
 
-    constructor(urlImage,position,size,points){
+    constructor(urlImage,position,size,points,type){
 
 
         return (async ()=> {
 
             super(urlImage,position,size);
             this.points=points;
-
+            this.type= type;
             this.image = await createImage(urlImage)
             return this;
         }) ()       

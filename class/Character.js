@@ -9,6 +9,9 @@ export class Character extends Element{
         super(urlImage,position,size);
         this.speed=speed;
         this.maxSpeed = maxSpeed;
+        this.direction="RIGHT";
+        this.onFire=0;
+
     }
 
     move(){
@@ -16,6 +19,8 @@ export class Character extends Element{
         
 
     }
+
+    
 
     draw(){
 

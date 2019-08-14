@@ -35,8 +35,9 @@ export class Map{
         })
 
         ctx.fillStyle = 'black';
-        ctx.fillRect(19*ct.UNIT_MAP, 9*ct.UNIT_MAP, ct.UNIT_MAP, ct.UNIT_MAP);
         this.pacman.draw();
+        ctx.fillRect(19*ct.UNIT_MAP, 9*ct.UNIT_MAP, ct.UNIT_MAP, ct.UNIT_MAP);
+
 
     }
 
@@ -69,9 +70,9 @@ export class Map{
                     break
                    
                     case 0: promises.push({});break;
-                    case 3: const item2 = new Item ('../images/item2.png',{x:posx*ct.UNIT_MAP,y:posy*ct.UNIT_MAP},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},500)
+                    case 3: const item2 = new Item ('../images/item2.png',{x:posx*ct.UNIT_MAP,y:posy*ct.UNIT_MAP},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},500,"BIGBALL");
                         promises.push (item2); break;
-                    case 2:  const item = new Item ('../images/item1.png',{x:posx*ct.UNIT_MAP,y:posy*ct.UNIT_MAP},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},200)
+                    case 2:  const item = new Item ('../images/item1.png',{x:posx*ct.UNIT_MAP,y:posy*ct.UNIT_MAP},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},200,"SMALLBALL");
                             promises.push (item);
                            
                  
@@ -177,7 +178,7 @@ export class Map{
         
 
             this.pacman.points+= this.map[posx][posy].points;
-            if (this.map[posx][posy].points==500) this.pacman.toggleOnFire();
+            if (this.map[posx][posy].type=="BIGBALL") this.pacman.setOnFire();
             this.map[posx][posy]={}
 
 

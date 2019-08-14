@@ -105,8 +105,6 @@ export class Game {
                 this.map.pacman.keyRight(); 
                 }
               
-
-
             }
 
         }
@@ -123,8 +121,6 @@ drawInfo(){
 
 }
 
-
-
     animate=()=>{
         this.listenKeydown();
         ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
@@ -134,8 +130,6 @@ drawInfo(){
         requestAnimationFrame(this.animate);         
        
     }
-
-   
 
 }
 
