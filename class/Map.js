@@ -5,6 +5,7 @@ import  {ct,map}  from '../helpers/constants.js';
 import {Wall} from './Wall.js';
 import {Item} from './Item.js';
 import {Pacman} from './Pacman.js';
+import { Enemy } from './Enemy.js';
 
 
 export class Map{
@@ -17,6 +18,7 @@ export class Map{
         this.items = [];
         this.pacman=null;
         this.sizeMap = sizeMap;
+        this.enemy;
        
     }
 
@@ -36,6 +38,7 @@ export class Map{
 
         ctx.fillStyle = 'black';
         this.pacman.draw();
+        this.enemy.draw();
         ctx.fillRect(19*ct.UNIT_MAP, 9*ct.UNIT_MAP, ct.UNIT_MAP, ct.UNIT_MAP);
 
 
@@ -55,6 +58,12 @@ export class Map{
         new Pacman('../images/pacman-right.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,0,3).then(
             data=>{
                 this.pacman=data;
+            }
+        )
+
+        new Enemy('../images/enemy-1-right.png',{x:ct.UNIT_MAP*10,y:ct.UNIT_MAP*19},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,0,3).then(
+            data=>{
+                this.enemy=data;
             }
         )
         
@@ -108,73 +117,49 @@ export class Map{
     }
 
 
-    pacmanCanMove(){
+    characterCanMove(character){ // watch if there is wall in next movement
+
+        var posx = Math.trunc( (character.position.x)/ct.UNIT_MAP)  
+        var posy = Math.trunc(character.position.y/ct.UNIT_MAP)
 
       
+        if (character.speed.x!=0){
 
-      
-        if (this.pacman.speed.x>0){
+            if (character.speed.x>0)
+            var posx = Math.trunc( (character.position.x+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
+
+            else
+            var posx = Math.trunc( (character.position.x-1)/ct.UNIT_MAP)  
 
 
-
-
-
-            var posx = Math.trunc( (this.pacman.position.x+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
-            var posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
-    
-
-            if (posx+1<this.map.length) {
-            if (this.pacman.position.x%ct.UNIT_MAP==0 && this.pacman.position.y%ct.UNIT_MAP==0 && this.map[posx+1][posy] instanceof Wall)                          {
-            this.pacman.position.x=(posx)*ct.UNIT_MAP;
-            this.pacman.speed.x=0;
+            if (posx+1<this.map.length && posx-1>=0) {
+            if ( (character.position.x%ct.UNIT_MAP==0  && this.map[posx+1][posy] instanceof Wall )|| ((character.position.x-1)%ct.UNIT_MAP<=5 && this.map[posx-1][posy] instanceof Wall) )                          {
+            character.position.x=(posx)*ct.UNIT_MAP;
+            character.speed.x=0;
             }
         }}
 
-        else if (this.pacman.speed.x<0){
+     
+        else if  (character.speed.y!=0){
 
-            var posx = Math.trunc( (this.pacman.position.x-1)/ct.UNIT_MAP)  
-            var posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
+            if (character.speed.y>0)
+            var posy = Math.trunc( (character.position.y+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
+
+            else 
+                var posy = Math.trunc( (character.position.y-1)/ct.UNIT_MAP)  
     
-            if (posx-1>=0) {
-            if ((this.pacman.position.x-1)%ct.UNIT_MAP<=5 && this.map[posx-1][posy] instanceof Wall){
-            this.pacman.position.x=(posx)*ct.UNIT_MAP;
-            this.pacman.speed.x=0;
+            if (posy+1<this.map[0].length && posy-1>=0){
+            if (((character.position.y+ct.UNIT_MAP-1)%ct.UNIT_MAP>=48 && this.map[posx][posy+1] instanceof Wall)||((character.position.y-1)%ct.UNIT_MAP<=5 && this.map[posx][posy-1] instanceof Wall)){
+            character.position.y=(posy)*ct.UNIT_MAP;
+            character.speed.y=0;
             }
         }}
 
-        else if (this.pacman.speed.y>0){
-
-            var posy = Math.trunc( (this.pacman.position.y+ct.UNIT_MAP-1)/ct.UNIT_MAP)  
-            var posx = Math.trunc(this.pacman.position.x/ct.UNIT_MAP)
+  
     
-            if (posy+1<this.map[0].length){
-            if ((this.pacman.position.y+ct.UNIT_MAP-1)%ct.UNIT_MAP>=48 && this.map[posx][posy+1] instanceof Wall){
-            this.pacman.position.y=(posy)*ct.UNIT_MAP;
-            this.pacman.speed.y=0;
-            }
-        }}
-
-        else if (this.pacman.speed.y<0){
-
-            var posy = Math.trunc( (this.pacman.position.y-1)/ct.UNIT_MAP)  
-            var posx = Math.trunc(this.pacman.position.x/ct.UNIT_MAP)
-    
-            if (posy-1>=0){
-
-            if ((this.pacman.position.y-1)%ct.UNIT_MAP<=5 && this.map[posx][posy-1] instanceof Wall){
-            this.pacman.position.y=(posy)*ct.UNIT_MAP;
-            this.pacman.speed.y=0;
-            }
-        }}
-    
-        else {
-        
-        var posx = Math.trunc( (this.pacman.position.x)/ct.UNIT_MAP)  
-        var posy = Math.trunc(this.pacman.position.y/ct.UNIT_MAP)
-        }
         if (posx-1>=0 && posx+1<this.map.length && posy-1>=0 && posy+1<this.map[0].length )
 
-        if (this.map[posx][posy] instanceof Item){
+        if (this.map[posx][posy] instanceof Item && character instanceof Pacman){
         
 
             this.pacman.points+= this.map[posx][posy].points;
@@ -188,7 +173,7 @@ export class Map{
     }
 
 
-    ispacmanLimit(){
+    isPacmanLimit(){
 
         if (this.pacman.position.x> this.sizeMap.width)
 

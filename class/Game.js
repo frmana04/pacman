@@ -35,79 +35,113 @@ export class Game {
 
     moveAll(){
 
-            this.map.ispacmanLimit()
-            this.map.pacmanCanMove()
+            this.map.isPacmanLimit()
+            this.map.characterCanMove(this.map.pacman)
+            this.map.characterCanMove(this.map.enemy)
+
             this.map.pacman.move();
+            this.map.enemy.move();
+
+       
+
+    }
+    listenKeydown(){
+
+        let direction;
+        document.onkeydown = (event)=> {
+
+            switch (event.keyCode){
+                case ct.KEY_UP: direction = "UP"; break;
+                case ct.KEY_DOWN: direction = "DOWN"; break;
+                case ct.KEY_LEFT: direction = "LEFT"; break;
+                case ct.KEY_RIGHT: direction = "RIGHT"; break;
+            }
+            this.handleMovement(this.map.pacman,direction)
+        }
        
 
     }
 
-    listenKeydown(){
-        document.onkeydown = (event)=> {
+    randomMovement(){
 
-            let posx, posy;
-            if (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
-             posx = Math.trunc(this.map.pacman.position.x/ct.UNIT_MAP)  
-            else             if (this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
-             posx = Math.trunc(this.map.pacman.position.x/ct.UNIT_MAP)  +1
+        let direction;
+        const randomNumber=Math.floor(Math.random() * 3); 
+        switch (randomNumber){
+            case 0: direction = "UP"; break;
+            case 1: direction = "DOWN"; break;
+            case 2: direction = "LEFT"; break;
+            case 3: direction = "RIGHT"; break;
+        }
+        this.handleMovement(this.map.enemy)
 
+    }
 
-            if (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
-             posy = Math.trunc(this.map.pacman.position.y/ct.UNIT_MAP)  
-            else             if (this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
-             posy = Math.trunc(this.map.pacman.position.y/ct.UNIT_MAP)  +1   
+    handleMovement(character,direction){
 
-          
-            switch(event.keyCode){
            
 
+            let posx, posy;
+            if (character.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
+             posx = Math.trunc(character.position.x/ct.UNIT_MAP)  
+            else             if (character.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
+             posx = Math.trunc(character.position.x/ct.UNIT_MAP)  +1
 
 
+            if (character.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED)
+             posy = Math.trunc(character.position.y/ct.UNIT_MAP)  
+            else             if (character.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED)
+             posy = Math.trunc(character.position.y/ct.UNIT_MAP)  +1   
 
-                case ct.KEY_UP:   
+          
+
+            switch(direction){
+           
+
+                case "UP":   
                 
-                if(((this.map.pacman.speed.x!=0 || (this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy-1] instanceof Wall) )||(  this.map.pacman.speed.y>0 )){
+                if(((character.speed.x!=0 || (character.speed.x==0 &&character.speed.y==0)) && (character.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || character.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy-1] instanceof Wall) )||(  character.speed.y>0 )){
                 
-                if (this.map.pacman.speed.x!=0)
-                this.map.pacman.position.x=posx*ct.UNIT_MAP;
+                if (character.speed.x!=0)
+                character.position.x=posx*ct.UNIT_MAP;
                 
-                this.map.pacman.keyUp(); 
+                character.keyUp(); 
                 }
 
                 break;
-                case ct.KEY_DOWN: 
+                case "DOWN": 
 
-                if(((this.map.pacman.speed.x!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy+1] instanceof Wall) )||(this.map.pacman.speed.y<0)){
+                if(((character.speed.x!=0 ||(character.speed.x==0 &&character.speed.y==0)) && (character.position.x%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || character.position.x%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx][posy+1] instanceof Wall) )||(character.speed.y<0)){
                 
-                if (this.map.pacman.speed.x!=0)
+                if (character.speed.x!=0)
 
-                this.map.pacman.position.x=posx*ct.UNIT_MAP;
-                this.map.pacman.keyDown(); 
+                character.position.x=posx*ct.UNIT_MAP;
+                character.keyDown(); 
                 }
                 break;
-                case ct.KEY_LEFT:
+                case "LEFT":
 
-                 if(((this.map.pacman.speed.y!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx-1][posy] instanceof Wall ))||(this.map.pacman.speed.x>0)){
+                 if(((character.speed.y!=0 ||(character.speed.x==0 &&character.speed.y==0)) && (character.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || character.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx-1][posy] instanceof Wall ))||(character.speed.x>0)){
                     
-                 if (this.map.pacman.speed.y!=0)
+                 if (character.speed.y!=0)
 
-                 this.map.pacman.position.y=posy*ct.UNIT_MAP;
-                 this.map.pacman.keyLeft(); 
+                 character.position.y=posy*ct.UNIT_MAP;
+                 character.keyLeft(); 
                  }
                  break;
-                case ct.KEY_RIGHT: 
 
-                if(((this.map.pacman.speed.y!=0 ||(this.map.pacman.speed.x==0 &&this.map.pacman.speed.y==0)) && (this.map.pacman.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || this.map.pacman.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx+1][posy] instanceof Wall) )||(this.map.pacman.speed.x<0)){
+                case "RIGHT": 
 
-                if (this.map.pacman.speed.y!=0)
+                if(((character.speed.y!=0 ||(character.speed.x==0 &&character.speed.y==0)) && (character.position.y%ct.UNIT_MAP<=4*ct.PACMAN_SPEED || character.position.y%ct.UNIT_MAP>=ct.UNIT_MAP-4*ct.PACMAN_SPEED) && !(this.map.map[posx+1][posy] instanceof Wall) )||(character.speed.x<0)){
 
-                this.map.pacman.position.y=posy*ct.UNIT_MAP;
-                this.map.pacman.keyRight(); 
+                if (character.speed.y!=0)
+
+                character.position.y=posy*ct.UNIT_MAP;
+                character.keyRight(); 
                 }
               
             }
 
-        }
+        
     }
 
   
@@ -123,6 +157,7 @@ drawInfo(){
 
     animate=()=>{
         this.listenKeydown();
+        this.randomMovement();
         ctx.clearRect(0,0,this.canvasSize.width,this.canvasSize.height);
         this.moveAll();
         this.map.draw(); 

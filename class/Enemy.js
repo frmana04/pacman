@@ -1,4 +1,7 @@
 import  {Character}  from "./Character.js";
+import {createImage} from '../helpers/load-image.js';
+import {ctx} from '../index.js';
+import  {ct}  from '../helpers/constants.js';
 
 
 export class Enemy extends Character {
@@ -12,6 +15,7 @@ export class Enemy extends Character {
 
             super(urlImage,position,size,speed,maxSpeed);
             this.type=type;
+          
             this.image = await createImage(urlImage);
             return this;
         }) ()       
@@ -69,5 +73,17 @@ export class Enemy extends Character {
 
         this.speed.x= this.maxSpeed; 
         this.speed.y=0;
+    }
+
+    draw(){
+
+
+       
+        ctx.drawImage(this.image,this.position.x,this.position.y,ct.UNIT_MAP,ct.UNIT_MAP,);
+
+      
+
+        
+
     }
 }

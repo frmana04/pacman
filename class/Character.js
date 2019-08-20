@@ -17,6 +17,8 @@ export class Character extends Element{
     move(){
 
         
+        this.position.x+=this.speed.x;
+        this.position.y+=this.speed.y;
 
     }
 
@@ -33,6 +35,11 @@ export class Character extends Element{
 
         
 
+    }
+
+    canMove(){
+
+        
     }
 
 }

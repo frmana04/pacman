@@ -32,13 +32,7 @@ export class Pacman extends Character {
         this.points+=points
     }
 
-    move(){
-
-
-         this.position.x+=this.speed.x;
-         this.position.y+=this.speed.y;
-
-    }
+ 
 
     keyUp(){
 
