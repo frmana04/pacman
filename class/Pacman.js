@@ -16,6 +16,7 @@ export class Pacman extends Character {
             this.points=points;
             this.lifes=lifes;
             this.image = await createImage(urlImage);
+            this.onFire=0;
             return this;
         }) ()       
     }
@@ -23,6 +24,13 @@ export class Pacman extends Character {
     die(){
 
         this.lifes--;
+        this.direction="RIGHT";
+        this.position.x =ct.UNIT_MAP*9;
+        this.position.y = ct.UNIT_MAP*19;
+        this.speed.x=0;
+        this.speed.y=0;
+        this.image.src='../images/pacman-right.png'
+
     }
     
   
@@ -34,7 +42,7 @@ export class Pacman extends Character {
 
  
 
-    keyUp(){
+    goUp(){
 
         this.direction="UP";
         if (this.onFire)
@@ -47,7 +55,7 @@ export class Pacman extends Character {
            
     }
 
-    keyDown(){
+    goDown(){
         this.direction="DOWN";
         if (this.onFire)
         this.image.src='../images/pacman-down-fire.png'
@@ -59,7 +67,7 @@ export class Pacman extends Character {
         this.speed.x=0;
     }
 
-    keyLeft(){
+    goLeft(){
 
         this.direction="LEFT";
         if (this.onFire)
@@ -71,7 +79,7 @@ export class Pacman extends Character {
        this.speed.y=0;
     }
 
-    keyRight(){
+    goRight(){
 
         this.direction="RIGHT";
         if (this.onFire)

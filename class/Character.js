@@ -5,12 +5,12 @@ import {ctx} from '../index.js'
 
 export class Character extends Element{
 
-    constructor(urlImage,position,size,speed,maxSpeed){
+    constructor(urlImage,position,size,speed,maxSpeed,onFire){
         super(urlImage,position,size);
         this.speed=speed;
         this.maxSpeed = maxSpeed;
         this.direction="RIGHT";
-        this.onFire=0;
+        this.onFire=onFire;
 
     }
 
@@ -36,6 +36,8 @@ export class Character extends Element{
         
 
     }
+
+    
 
     canMove(){
 
