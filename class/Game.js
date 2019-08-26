@@ -18,34 +18,27 @@ export class Game {
             this.map.createMap().then(()=>{
 
                 this.init();
-            }) 
-      
-
-          
-
-       
+            })    
        
     }
 
-    init(){
-        
+    init(){     
         requestAnimationFrame(this.animate);         
-
     }
 
     moveAll(){
 
             this.map.isCharacterLimit(this.map.pacman)
-            this.map.isCharacterLimit(this.map.enemy)
 
+            this.map.enemies.forEach(enemy=>{
+                this.map.isCharacterLimit(enemy)
+                this.map.characterCanMove(enemy)
+                enemy.move();
+            })         
             this.map.characterCanMove(this.map.pacman)
-            this.map.characterCanMove(this.map.enemy)
 
             this.map.pacman.move();
-            this.map.enemy.move();
-
-       
-
+            
     }
    
 isGameOver(){

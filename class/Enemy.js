@@ -31,7 +31,7 @@ export class Enemy extends Character {
         this.image.src=`../images/enemy-${this.type}-up-fire.png`
 
         else
-       this.image.src=`../images/enemy-${this.type}.png`
+       this.image.src=`../images/enemy.png`
        this.speed.y=-this.maxSpeed; 
        this.speed.x=0;
            
@@ -43,7 +43,7 @@ export class Enemy extends Character {
         this.image.src=`../images/enemy-${this.type}-down-fire.png`
 
         else
-        this.image.src=`../images/enemy-${this.type}.png`
+        this.image.src=`../images/enemy.png`
 
         this.speed.y= this.maxSpeed; 
         this.speed.x=0;
@@ -55,7 +55,7 @@ export class Enemy extends Character {
         if (this.onFire)
        this.image.src=`../images/enemy-${this.type}-left-fire.png`
        else
-       this.image.src=`../images/enemy-${this.type}.png`
+       this.image.src=`../images/enemy.png`
 
        this.speed.x=-this.maxSpeed; 
        this.speed.y=0;
@@ -67,7 +67,7 @@ export class Enemy extends Character {
         if (this.onFire)
         this.image.src=`../images/enemy-${this.type}-right-fire.png`
         else
-        this.image.src=`../images/enemy-${this.type}.png`
+        this.image.src=`../images/enemy.png`
 
         this.speed.x= this.maxSpeed; 
         this.speed.y=0;

@@ -18,7 +18,6 @@ export class Map{
         this.items = [];
         this.pacman=null;
         this.sizeMap = sizeMap;
-        this.enemy;
        
     }
 
@@ -38,7 +37,8 @@ export class Map{
 
         ctx.fillStyle = 'black';
         this.pacman.draw();
-        this.enemy.draw();
+        this.enemies.forEach(enemy=>{
+        enemy.draw();})
         ctx.fillRect(19*ct.UNIT_MAP, 9*ct.UNIT_MAP, ct.UNIT_MAP, ct.UNIT_MAP);
 
 
@@ -63,9 +63,23 @@ export class Map{
 
         new Enemy('../images/enemy-1-right-fire.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*10},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,1,1).then(
             data=>{
-                this.enemy=data;
+                this.enemies.push(data);
+
+            }
+        ),
+
+        new Enemy('../images/enemy-2-right-fire.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*10},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,2,1).then(
+            data=>{
+                this.enemies.push(data);
             }
         )
+
+        new Enemy('../images/enemy-3-right-fire.png',{x:ct.UNIT_MAP*9,y:ct.UNIT_MAP*10},{width:ct.UNIT_MAP,height:ct.UNIT_MAP},{x:5,y:0},5,3,1).then(
+            data=>{
+                this.enemies.push(data);
+            }
+        )
+        
         
            map.forEach((e1,posx) => {
            return e1.forEach(async(e2,posy) =>{
@@ -173,10 +187,16 @@ export class Map{
         }
    
         if (this.pacman.onFire){
-            this.enemy.deleteOnFire();
+            this.enemies.forEach(enemy => {
+                enemy.deleteOnFire();
+
+            })
         }
-        else 
-        this.enemy.setOnFire();
+        else  this.enemies.forEach(enemy => {
+            enemy.setOnFire();
+
+        })
+        
     }
 
 
@@ -195,6 +215,7 @@ export class Map{
         else if (character.position.y< -ct.UNIT_MAP)
         character.position.y=this.sizeMap.height;
     }
+
 
     handleMovement(character,direction){
 
@@ -266,16 +287,23 @@ export class Map{
 
 isThereCollision(){
 
+    this.enemies.forEach( enemy => {
+     
 
-    if (!((this.pacman.position.x > (this.enemy.position.x + ct.UNIT_MAP) || 
-    (this.pacman.position.x + ct.UNIT_MAP) < this.enemy.position.x || 
-    this.pacman.position.y > (this.enemy.position.y + ct.UNIT_MAP) ||
-    (this.pacman.position.y + ct.UNIT_MAP) < this.enemy.position.y)))
+    if (!((this.pacman.position.x > (enemy.position.x + ct.UNIT_MAP) || 
+    (this.pacman.position.x + ct.UNIT_MAP) < enemy.position.x || 
+    this.pacman.position.y > (enemy.position.y + ct.UNIT_MAP) ||
+    (this.pacman.position.y + ct.UNIT_MAP) < enemy.position.y)))
     {  
-         if (this.enemy.onFire) 
+         if (enemy.onFire) 
              this.pacman.die();
-         else this.enemy.die();
+         else enemy.die();
     }
+
+    })
+
+    
+
 }
 
 listenKeydown(){
@@ -299,17 +327,22 @@ moveEnemy(){
 
    let direction;   
 
-    switch (this.enemy.type){
+   this.enemies.forEach( enemy => {
+   
+    switch (enemy.type){
 
-        case 1: direction = this.enemy.randomMovement();break;
+        case 1: 
+        case 2:
+        case 3:
+        
+        direction = enemy.randomMovement();break;
      //   case 2: direction = this.map.enemy.randomMovement2();break;
         case 3:
     }
 
-    this.handleMovement(this.enemy,direction)
-}
-
-  
+    this.handleMovement(enemy,direction)
+})
 
     }
 
+}
